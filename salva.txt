@@ -1,0 +1,41 @@
+
+DATABASE_URL=postgres://AristotelesAlves:jrcdTXEW1F4i@ep-shrill-credit-529356.us-east-2.aws.neon.tech/neondb
+
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// .env
+
+// prisma/schema.prisma
+datasource db {
+  provider = "postgresql"
+  url  	= env("DATABASE_URL")
+  // If you use Prisma Migrate, specify a URL for the Prisma shadow database
+  // https://neon.tech/docs/guides/prisma/#configure-a-shadow-database-for-prisma-migrate
+  // shadowDatabaseUrl = env(“SHADOW_DATABASE_URL”)
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+
+model user {
+  id String @id @default(uuid())
+  email String @unique
+  telefone String 
+  cpf String @unique
+  rg String @unique
+  dataNascimento String
+}
+
+
+
+// try{
+        //     const result = await service.execute({name, password});
+        //     response.json(result)
+
+        // } catch(err) {
+        //     return response.json(err.message)
+        // }
