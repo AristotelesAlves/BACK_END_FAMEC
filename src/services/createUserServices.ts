@@ -1,4 +1,5 @@
 import prismaClient from "../prisma"
+import * as EmailValidator from 'email-validator';
 
 interface IcreateUser{
     cpf: string;
@@ -33,6 +34,11 @@ class createUserServices{
                 }
             }
         }
+
+        if (!EmailValidator.validate(email)) {
+            return 'Endereço de e-mail não é válido!'
+          }
+        
         const createUser = await prismaClient.user.create({
             data:{
                 cpf,
