@@ -1,5 +1,6 @@
 import prismaClient from "../prisma"
 import * as EmailValidator from 'email-validator';
+import nodemailer from 'nodemailer';
 
 interface IcreateUser{
     cpf: string;
@@ -49,6 +50,24 @@ class createUserServices{
                 telefone,
             }
         })
+
+        const transport = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
+            auth:{
+                user:'arystotelys@gmail.com',
+                pass:process.env.KEY_SECRET_EMAIL,
+            }
+        })
+
+        transport.sendMail({
+            from:'Aristoteles <arystotelys@gmail.com>',
+            to:email,
+            subject:'enviando email',
+            html: '<h1>Ola devs</h1> <p>este email foi enviado usando o nodemail</p>',
+        }).then(() => console.log('mensagem enviado com sucesso')).catch((error)=> console.log(error))
+
         return createUser      
     }
 }
