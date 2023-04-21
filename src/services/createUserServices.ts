@@ -36,7 +36,7 @@ class createUserServices{
             }
         }
 
-        if (!EmailValidator.validate(email)) {
+        if (!EmailValidator.validate(email)) { 
             return 'Endereço de e-mail não é válido!'
           }
         

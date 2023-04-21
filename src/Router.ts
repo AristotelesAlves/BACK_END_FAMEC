@@ -11,10 +11,5 @@ router.post('/authenticate', new AuthenticateUserController().handle)
 
 router.post('/createUser', new createUserController().handle)
 
-router.post('/login', (req, res) => {
-    const {nome, password} = req.body
-    console.log(nome,password)
-    return res.json({nome,password})
-})
 
 export { router }
