@@ -2,8 +2,8 @@ import prismaClient from "../prisma"
 
 class getUserServices {
     async execute(){
-        const mensagem = await prismaClient.user.findMany()
-        return mensagem
+        const users = await prismaClient.user.findMany()
+        return users
     }
 }
 

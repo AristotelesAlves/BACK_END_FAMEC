@@ -5,11 +5,11 @@ import { createUserController } from "./controller/createUserController";
 
 const router = Router();
 
-router.get('/user', new getUserController().handle)
+router.get('/users', new getUserController().handle)
 
 router.post('/authenticate', new AuthenticateUserController().handle)
 
-router.post('/createUser', new createUserController().handle)
+router.post('/user', new createUserController().handle)
 
 
 export { router }
