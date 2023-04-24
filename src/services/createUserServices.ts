@@ -1,6 +1,7 @@
 import prismaClient from "../prisma"
 import * as EmailValidator from 'email-validator';
 import nodemailer from 'nodemailer';
+import {textEmail} from './textEmail'
 
 interface IcreateUser{
     cpf: string;
@@ -65,7 +66,7 @@ class createUserServices{
             from:'Aristoteles <arystotelys@gmail.com>',
             to:email,
             subject:'enviando email',
-            html: '<h1>Ola devs</h1> <p>este email foi enviado usando o nodemail</p>',
+            html: textEmail,
         }).then(() => console.log('mensagem enviado com sucesso')).catch((error)=> console.log(error))
 
         return createUser      
