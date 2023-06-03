@@ -4,51 +4,48 @@ import nodemailer from 'nodemailer';
 import {textEmail} from './textEmail'
 
 interface IcreateUser{
+    nome: string;
+    email: string;
+    telefone: string;
     cpf: string;
     dataNascimento: string;
-    email: string;
-    rg: string;
-    telefone: string;
-    nome: string;
+    curso: string;
 }
 
 class createUserServices{
-    async execute({cpf, dataNascimento,email,rg,telefone,nome}: IcreateUser){
+    async execute({cpf, dataNascimento,email,telefone,nome, curso}: IcreateUser){
         const user = await prismaClient.user.findMany({
             where:{
                 OR:[
                     {cpf},
                     {email},
-                    {rg}
                 ]
             }
-                
         })
         
-        if (user.length > 0){
-            for(const users of user){
+        if (user.length > 0){ // Verificando se o array esta vazio
+            for(const users of user){ // Verificando se o usuario já cadastrou
                 if (users.email === email){
-                    return 'já existe email'
-                } else if (users.rg === rg){
-                    return 'já existe rg'
+                    return 'E-mail já utilizado'
                 } else if (users.cpf){
-                    return 'já existe cpf'
+                    return 'CPF já utilizado'
                 }
             }
         }
 
         if (!EmailValidator.validate(email)) { 
-            return 'Endereço de e-mail não é válido!'
+            return 'Seu E-mail não é válido!'
           }
         
+        // passou pelas camadas de verificação, cria o usuário no db
         const createUser = await prismaClient.user.create({
             data:{
+                nome,
+                email,
+                telefone,
                 cpf,
                 dataNascimento,
-                email,
-                rg,
-                nome,
-                telefone,
+                curso
             }
         })
 
@@ -65,7 +62,7 @@ class createUserServices{
         transport.sendMail({
             from:'Aristoteles <arystotelys@gmail.com>',
             to:email,
-            subject:'enviando email',
+            subject:'bem-vindo(a) à Faculdade X!',
             html: textEmail,
         }).then(() => console.log('mensagem enviado com sucesso')).catch((error)=> console.log(error))
 
